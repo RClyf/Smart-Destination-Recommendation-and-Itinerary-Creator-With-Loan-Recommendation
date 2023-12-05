@@ -74,7 +74,10 @@ const LoanForm = () => {
       const getAvailableId = async () => {
         const randomId = generateRandomId();
     
-        handleInputChange("Customer_ID", randomId)
+        setFormData((prevData) => ({
+          ...prevData,
+          Customer_ID: randomId,
+      }));
       };
 
 
@@ -95,14 +98,14 @@ const LoanForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        await getAvailableId();
+
+        const randomId = generateRandomId();
 
         try {
           const response = await axios.post(
             'https://loanrecommendationapi.azurewebsites.net/customers',
             {
-                Customer_ID: formData.Customer_ID,
+                Customer_ID: randomId,
                 Gender: formData.Gender,
                 Married: formData.Married,
                 Dependents: formData.Dependents,
